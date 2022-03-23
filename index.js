@@ -1,5 +1,3 @@
-console.log('hello')
-
 const { response } = require('express')
 const express = require('express')
 
@@ -61,6 +59,27 @@ app.delete('/api/persons/:id', (request, response) => {
     persons = persons.filter(person => person.id !== id)
 
     response.status(204).end()    
+})
+
+const generateId = (max) => {
+    return Math.floor(Math.random() * max)
+}
+
+app.post('/api/persons', (request, response) => {
+    // const person = request.body
+    const body = request.body
+
+    const person = {
+        id: generateId(100000),
+        name: body.name,
+        number: body.number
+    }
+    
+    
+    console.log(person)
+    persons = persons.concat(person)
+
+    response.json(person)
 })
 
 const PORT = 3001
