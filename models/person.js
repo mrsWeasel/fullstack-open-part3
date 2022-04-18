@@ -1,14 +1,6 @@
 const mongoose = require('mongoose')
 
-// if (process.argv.length < 3) {
-//     console.log('give password as argument')
-//     process.exit
-// }
-
-// const password = process.argv[2]
-
 const url = process.env.MONGODB_URI
-// const url = `mongodb+srv://fullstack-puhelinluettelo:${password}@cluster0.cf2g7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
 mongoose.connect(url)
     .then(result => {
@@ -19,8 +11,15 @@ mongoose.connect(url)
     })
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
+    name: {
+        type: String,
+        minLength: 3,
+        required: true,
+    },
+    number: {
+        type: String,
+        required: true,
+    }
 })
 
 personSchema.set('toJSON', {
